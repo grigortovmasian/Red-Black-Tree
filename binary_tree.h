@@ -20,4 +20,7 @@ protected:
 	virtual void balance(CNode *);
 private:
 	void delete_recursive_helper();
+	void inorder_recursive(CNode *);
+	void preorder_recursive(CNode *);
+	void postorder_recursive(CNode *);
 };
