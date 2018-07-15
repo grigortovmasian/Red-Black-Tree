@@ -1,4 +1,5 @@
 #include "binary_tree.h"
+#include<iostream>
 
 CBinaryTree::CBinaryTree():m_root(nullptr) {}
 
@@ -18,9 +19,11 @@ CNode * CBinaryTree::insert(int value) {
 	CNode * iter = m_root;
 	while (true)
 	{
-		if (iter->get_value() == value)
+		if (iter->get_value() == value) {
+			delete new_node;
 			return nullptr;
-
+		}
+			
 		if (iter->get_value() > value)
 			if (iter->get_left())
 				iter = iter->get_left();
@@ -62,18 +65,17 @@ CNode * CBinaryTree::find(int value) {
 }
 
 CNode * CBinaryTree::remove(int value) {
-
 }
 void CBinaryTree::print_inorder() {
-
+	inorder_recursive(m_root);
 }
 
 void CBinaryTree::print_postorder() {
-
+	postorder_recursive(m_root);
 }
 
 void CBinaryTree::print_preorder() {
-
+	preorder_recursive(m_root);
 }
 
 void CBinaryTree::left_rotate(CNode * node) {
@@ -90,4 +92,41 @@ void CBinaryTree::balance(CNode *) {
 
 void CBinaryTree::delete_recursive_helper() {
 
+}
+
+void CBinaryTree::postorder_recursive(CNode * node) {
+
+	if (node == nullptr)
+		return;
+
+	postorder_recursive(node->get_left());
+
+	postorder_recursive(node->get_right());
+
+	std::cout << "value = " << node->get_value() << std::endl;
+
+}
+
+void CBinaryTree::preorder_recursive(CNode * node) {
+
+	if (node == nullptr)
+		return;
+
+	std::cout << "value = " << node->get_value() << std::endl;
+
+	preorder_recursive(node->get_left());
+
+	preorder_recursive(node->get_right());
+}
+
+void CBinaryTree::inorder_recursive(CNode * node) {
+
+	if (node == nullptr)
+		return;
+
+	inorder_recursive(node->get_left());
+
+	std::cout << "value = " << node->get_value() << std::endl;
+
+	inorder_recursive(node->get_right());
 }
