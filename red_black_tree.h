@@ -7,7 +7,7 @@ public:
 	CRedBlackTree();
 	~CRedBlackTree();
 	virtual CNode * insert(int);
-	virtual CNode * remove(int);
+	virtual bool remove(int);
 protected:
 	virtual void balance(CNode *);
 };

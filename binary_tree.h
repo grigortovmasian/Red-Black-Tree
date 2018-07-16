@@ -8,7 +8,7 @@ public:
 	virtual ~CBinaryTree();
 	virtual CNode * insert(int value);
 	CNode * find(int value);
-	virtual CNode * remove(int value);
+	virtual bool remove(int value);
 	void print_inorder();
 	void print_preorder();
 	void print_postorder();
@@ -17,6 +17,7 @@ protected:
 	/* functions only for inherit clases */
 	void left_rotate(CNode *);
 	void right_rotate(CNode *);
+	CNode * find_prev(CNode *);
 	virtual void balance(CNode *);
 private:
 	void delete_recursive_helper();
