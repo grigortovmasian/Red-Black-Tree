@@ -12,6 +12,10 @@ bool CRedBlackTree::remove(int value) {
 
 }
 
-void CRedBlackTree::balance(CNode * node) {
+void CRedBlackTree::balance_remove(CNode * node) {
+
+}
+
+void CRedBlackTree::balance_insert(CNode * node) {
 
 }

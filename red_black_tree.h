@@ -9,5 +9,6 @@ public:
 	virtual CNode * insert(int);
 	virtual bool remove(int);
 protected:
-	virtual void balance(CNode *);
+	virtual void balance_insert(CNode *);
+	virtual void balance_remove(CNode *);
 };

@@ -18,7 +18,8 @@ protected:
 	void left_rotate(CNode *);
 	void right_rotate(CNode *);
 	CNode * find_prev(CNode *);
-	virtual void balance(CNode *);
+	virtual void balance_insert(CNode *);
+	virtual void balance_remove(CNode *);
 private:
 	void delete_recursive_helper(CNode *);
 	void inorder_recursive(CNode *);

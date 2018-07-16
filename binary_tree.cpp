@@ -173,9 +173,9 @@ void CBinaryTree::right_rotate(CNode * node) {
 	node->set_right(r_node);
 }
 
-void CBinaryTree::balance(CNode *) {
+void CBinaryTree::balance_insert(CNode *) {}
 
-}
+void CBinaryTree::balance_remove(CNode *) {}
 
 void CBinaryTree::delete_recursive_helper(CNode * node) {
 
