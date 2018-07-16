@@ -4,7 +4,7 @@
 CBinaryTree::CBinaryTree():m_root(nullptr) {}
 
 CBinaryTree::~CBinaryTree() {
-
+		delete_recursive_helper(m_root);
 }
 
 CNode * CBinaryTree::insert(int value) {
@@ -177,8 +177,14 @@ void CBinaryTree::balance(CNode *) {
 
 }
 
-void CBinaryTree::delete_recursive_helper() {
+void CBinaryTree::delete_recursive_helper(CNode * node) {
 
+	if (node == nullptr)
+		return;
+
+	delete_recursive_helper(node->get_left());
+	delete_recursive_helper(node->get_right());
+	delete node;
 }
 
 CNode * CBinaryTree::find_prev(CNode * node) {

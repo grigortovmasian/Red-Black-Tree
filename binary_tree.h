@@ -20,7 +20,7 @@ protected:
 	CNode * find_prev(CNode *);
 	virtual void balance(CNode *);
 private:
-	void delete_recursive_helper();
+	void delete_recursive_helper(CNode *);
 	void inorder_recursive(CNode *);
 	void preorder_recursive(CNode *);
 	void postorder_recursive(CNode *);
