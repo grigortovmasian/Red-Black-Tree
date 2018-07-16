@@ -133,10 +133,44 @@ void CBinaryTree::print_preorder() {
 
 void CBinaryTree::left_rotate(CNode * node) {
 
+	CNode * l_node = node->get_parent();
+	if (l_node == nullptr)
+		return;
+
+	if (l_node == m_root)
+		m_root = node;
+
+	if (l_node->get_parent())
+		if (l_node->get_parent()->get_left() == l_node)
+			l_node->get_parent()->set_left(node);
+		else
+			l_node->get_parent()->set_right(node);
+
+	node->set_parent(l_node->get_parent());
+	l_node->set_parent(node);
+	l_node->set_right(node->get_left());
+	node->set_left(l_node);
 }
 
 void CBinaryTree::right_rotate(CNode * node) {
 
+	CNode * r_node = node->get_parent();
+	if (r_node == nullptr)
+		return;
+
+	if (r_node == m_root)
+		m_root = node;
+
+	if (r_node->get_parent())
+		if (r_node->get_parent()->get_left() == r_node)
+			r_node->get_parent()->set_left(node);
+		else
+			r_node->get_parent()->set_right(node);
+
+	node->set_parent(r_node->get_parent());
+	r_node->set_parent(node);
+	r_node->set_left(node->get_right());
+	node->set_right(r_node);
 }
 
 void CBinaryTree::balance(CNode *) {
