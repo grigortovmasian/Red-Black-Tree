@@ -8,7 +8,7 @@ CNode * CRedBlackTree::insert(int value) {
 
 }
 
-CNode * CRedBlackTree::remove(int value) {
+bool CRedBlackTree::remove(int value) {
 
 }
 

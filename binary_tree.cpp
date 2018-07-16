@@ -64,7 +64,60 @@ CNode * CBinaryTree::find(int value) {
 	return ret;
 }
 
-CNode * CBinaryTree::remove(int value) {
+bool CBinaryTree::remove(int value) {
+
+	CNode * rm_node = find(value);
+	if (rm_node == nullptr)
+		return false;
+
+	if (rm_node->get_left() && rm_node->get_right()) {
+		CNode * prev = find_prev(rm_node);
+		int tmp = rm_node->get_value();
+		rm_node->set_value(prev->get_value());
+		prev->set_value(tmp);
+		rm_node = prev;
+	}
+
+	if (!rm_node->get_left() && !rm_node->get_right()) {
+		if (rm_node == m_root) {
+			delete m_root;
+			m_root = nullptr;
+			return true;
+		} else {
+			if (rm_node->get_parent()->get_left() == rm_node)
+				rm_node->get_parent()->set_left(nullptr);
+			else
+				rm_node->get_parent()->set_right(nullptr);
+
+			delete rm_node;
+			return true;
+		}
+	}
+
+	if (rm_node->get_left()) {
+		rm_node->get_left()->set_parent(rm_node->get_parent());
+		if (rm_node == m_root)
+			m_root = rm_node->get_left();
+		else
+			if (rm_node->get_parent()->get_left() == rm_node)
+				rm_node->get_parent()->set_left(rm_node->get_left());
+			else
+				rm_node->get_parent()->set_right(rm_node->get_left());
+	} else {
+		rm_node->get_right()->set_parent(rm_node->get_parent());
+
+		if (rm_node == m_root)
+			m_root = rm_node->get_right();
+		else
+			if (rm_node->get_parent()->get_left() == rm_node)
+				rm_node->get_parent()->set_left(rm_node->get_right());
+			else
+				rm_node->get_parent()->set_right(rm_node->get_right());
+	}
+
+	delete rm_node;
+	return true;
+
 }
 void CBinaryTree::print_inorder() {
 	inorder_recursive(m_root);
@@ -92,6 +145,19 @@ void CBinaryTree::balance(CNode *) {
 
 void CBinaryTree::delete_recursive_helper() {
 
+}
+
+CNode * CBinaryTree::find_prev(CNode * node) {
+
+	CNode * ret = node->get_left();
+	if (ret == nullptr)
+		return ret;
+	while (ret->get_right())
+	{
+		ret = ret->get_right();
+	}
+
+	return ret;
 }
 
 void CBinaryTree::postorder_recursive(CNode * node) {
