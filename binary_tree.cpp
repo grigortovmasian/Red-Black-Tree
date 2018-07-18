@@ -11,39 +11,7 @@ CNode * CBinaryTree::insert(int value) {
 	CNode * new_node = new CNode();
 	new_node->set_value(value);
 
-	if (m_root == nullptr) {
-		m_root = new_node;
-		return new_node;
-	}
-
-	CNode * iter = m_root;
-	while (true)
-	{
-		if (iter->get_value() == value) {
-			delete new_node;
-			return nullptr;
-		}
-			
-		if (iter->get_value() > value)
-			if (iter->get_left())
-				iter = iter->get_left();
-			else {
-				new_node->set_parent(iter);
-				iter->set_left(new_node);
-				return new_node;
-			}
-		else
-			if (iter->get_right())
-				iter = iter->get_right();
-			else {
-				new_node->set_parent(iter);
-				iter->set_right(new_node);
-				return new_node;
-			}
-	}
-
-
-
+	return insert_helper(new_node);
 }
 
 CNode * CBinaryTree::find(int value) {
@@ -78,46 +46,8 @@ bool CBinaryTree::remove(int value) {
 		rm_node = prev;
 	}
 
-	if (!rm_node->get_left() && !rm_node->get_right()) {
-		if (rm_node == m_root) {
-			delete m_root;
-			m_root = nullptr;
-			return true;
-		} else {
-			if (rm_node->get_parent()->get_left() == rm_node)
-				rm_node->get_parent()->set_left(nullptr);
-			else
-				rm_node->get_parent()->set_right(nullptr);
-
-			delete rm_node;
-			return true;
-		}
-	}
-
-	if (rm_node->get_left()) {
-		rm_node->get_left()->set_parent(rm_node->get_parent());
-		if (rm_node == m_root)
-			m_root = rm_node->get_left();
-		else
-			if (rm_node->get_parent()->get_left() == rm_node)
-				rm_node->get_parent()->set_left(rm_node->get_left());
-			else
-				rm_node->get_parent()->set_right(rm_node->get_left());
-	} else {
-		rm_node->get_right()->set_parent(rm_node->get_parent());
-
-		if (rm_node == m_root)
-			m_root = rm_node->get_right();
-		else
-			if (rm_node->get_parent()->get_left() == rm_node)
-				rm_node->get_parent()->set_left(rm_node->get_right());
-			else
-				rm_node->get_parent()->set_right(rm_node->get_right());
-	}
-
-	delete rm_node;
+	remove_helper(rm_node);
 	return true;
-
 }
 void CBinaryTree::print_inorder() {
 	inorder_recursive(m_root);
@@ -235,4 +165,88 @@ void CBinaryTree::inorder_recursive(CNode * node) {
 	std::cout << "value = " << node->get_value() << std::endl;
 
 	inorder_recursive(node->get_right());
+}
+
+CNode * CBinaryTree::insert_helper(CNode * new_node) {
+
+	if (m_root == nullptr) {
+		m_root = new_node;
+		return new_node;
+	}
+
+	CNode * iter = m_root;
+	while (true)
+	{
+		if (iter->get_value() == new_node->get_value()) {
+			delete new_node;
+			return nullptr;
+		}
+
+		if (iter->get_value() > new_node->get_value())
+			if (iter->get_left())
+				iter = iter->get_left();
+			else {
+				new_node->set_parent(iter);
+				iter->set_left(new_node);
+				return new_node;
+			}
+		else
+			if (iter->get_right())
+				iter = iter->get_right();
+			else {
+				new_node->set_parent(iter);
+				iter->set_right(new_node);
+				return new_node;
+			}
+	}
+
+}
+
+CNode * CBinaryTree::remove_helper(CNode * rm_node) {
+
+	CNode * ret;
+
+	if (!rm_node->get_left() && !rm_node->get_right()) {
+		if (rm_node == m_root) {
+			delete m_root;
+			m_root = nullptr;
+		}
+		else {
+			if (rm_node->get_parent()->get_left() == rm_node)
+				rm_node->get_parent()->set_left(nullptr);
+			else
+				rm_node->get_parent()->set_right(nullptr);
+
+			delete rm_node;
+		}
+
+		return nullptr;
+	}
+
+	if (rm_node->get_left()) {
+		ret = rm_node->get_left();
+		rm_node->get_left()->set_parent(rm_node->get_parent());
+		if (rm_node == m_root)
+			m_root = rm_node->get_left();
+		else
+			if (rm_node->get_parent()->get_left() == rm_node)
+				rm_node->get_parent()->set_left(rm_node->get_left());
+			else
+				rm_node->get_parent()->set_right(rm_node->get_left());
+	}
+	else {
+		ret = rm_node->get_right();
+		rm_node->get_right()->set_parent(rm_node->get_parent());
+
+		if (rm_node == m_root)
+			m_root = rm_node->get_right();
+		else
+			if (rm_node->get_parent()->get_left() == rm_node)
+				rm_node->get_parent()->set_left(rm_node->get_right());
+			else
+				rm_node->get_parent()->set_right(rm_node->get_right());
+	}
+
+	delete rm_node;
+	return ret;
 }
