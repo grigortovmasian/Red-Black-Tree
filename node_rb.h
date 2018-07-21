@@ -10,11 +10,11 @@ public:
 	void set_red();
 	bool is_black();
 	bool is_red();
-
+	void recolor();
 
 private:
 	/* 1 - Red (By default)
 	 * 0 - Black
 	 */
-	bool m_color;
+	bool m_colour;
 };
