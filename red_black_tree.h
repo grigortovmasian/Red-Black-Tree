@@ -1,6 +1,7 @@
 #pragma once
 
 #include "binary_tree.h"
+#include "node_rb.h"
 
 class CRedBlackTree : public CBinaryTree {
 public:
