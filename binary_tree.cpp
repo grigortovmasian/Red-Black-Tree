@@ -79,6 +79,7 @@ void CBinaryTree::left_rotate(CNode * node) {
 	node->set_parent(l_node->get_parent());
 	l_node->set_parent(node);
 	l_node->set_right(node->get_left());
+	if (l_node->get_right() != nullptr) l_node->get_right()->set_parent(l_node);
 	node->set_left(l_node);
 }
 
@@ -100,6 +101,7 @@ void CBinaryTree::right_rotate(CNode * node) {
 	node->set_parent(r_node->get_parent());
 	r_node->set_parent(node);
 	r_node->set_left(node->get_right());
+	if (r_node->get_left() != nullptr) r_node->get_left()->set_parent(r_node);
 	node->set_right(r_node);
 }
 
